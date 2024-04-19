@@ -7,50 +7,55 @@ use App\Models\Penjualan;
 
 class PenjualanController extends Controller
 {
-    public function index()
+    public function tampilkanPenjualan()
     {
-        $penjualan = Penjualan::get();
-        return view('admin.penjualan', ['penjualan' => $penjualan]);
+        $penjualan = Penjualan::all(); // Mengambil semua data penjualan
+        return view('petugas.penjualan.index', compact('penjualan')); // Meneruskan data penjualan ke tampilan
     }
 
+    // Menampilkan halaman tambah penjualan
     public function tambah()
     {
-        return view('admin.penjualan.form');
+        return view('penjualan.tambah');
     }
 
+    // Menyimpan data penjualan baru
     public function simpan(Request $request)
     {
-        $data = [
-            'pelanggan_id' => $request->pelanggan_id,
-            'tgl_penjualan'=> $request->tgl_penjualan,
-            'total_harga'=>$request->total_harga
-        ];
+        // Validasi data input
+        $request->validate([
+            'nama_pelanggan' => 'required|string|max:255',
+            'alamat_pelanggan' => 'required|string|max:255',
+            'nomor_telepon' => 'required|string|max:15',
+            // tambahkan validasi lainnya sesuai kebutuhan
+        ]);
 
-        Penjualan::create($data);
-        return redirect()->route('penjualan');
+        // Simpan data penjualan ke database
+        $penjualan = new Penjualan();
+        $penjualan->nama_pelanggan = $request->nama_pelanggan;
+        $penjualan->alamat_pelanggan = $request->alamat_pelanggan;
+        $penjualan->nomor_telepon = $request->nomor_telepon;
+        // tambahkan field lainnya sesuai kebutuhan
+        $penjualan->save();
+
+        // Redirect dengan pesan sukses
+        return redirect()->route('detail_penjualan', $penjualan->id)
+            ->with('success', 'Penjualan berhasil disimpan.');
     }
 
-    public function edit($id)
+    // Menampilkan detail penjualan
+    public function detail($id)
     {
-        $penjualan = Penjualan::find($id)->first();
-        return view('admin.penjualan.form', ['penjualan' => $penjualan]);
+        $penjualan = Penjualan::findOrFail($id);
+        return view('penjualan.detail', compact('penjualan'));
     }
 
-    public function update(Request $request, $id)
-    {
-        $data = [
-            'pelanggan_id' => $request->pelanggan_id,
-            'tgl_penjualan'=> $request->tgl_penjualan,
-            'total_harga'=>$request->total_harga
-        ];
-
-        Penjualan::find($id)->update($data);
-        return redirect()->route('penjualan');
-    }
-
+    // Menghapus penjualan
     public function hapus($id)
     {
-        Penjualan::find($id)->delete();
-        return redirect()->route('penjualan');
+        $penjualan = Penjualan::findOrFail($id);
+        $penjualan->delete();
+        return redirect()->route('produk_petugas')->with('success', 'Penjualan berhasil dihapus.');
     }
 }
+

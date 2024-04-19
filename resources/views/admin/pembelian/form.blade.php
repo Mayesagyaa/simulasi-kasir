@@ -11,8 +11,8 @@
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Beranda</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('meja') }}">Meja</a></li>
+                        <li class="breadcrumb-item"><a href="">Beranda</a></li>
+                        <li class="breadcrumb-item"><a href="">Meja</a></li>
                         <li class="breadcrumb-item active">Form Meja</li>
                     </ol>
                 </div>
@@ -35,7 +35,7 @@
                             </div>
                         </div>
                         <div class="card-footer">
-                            <a href="{{ route('meja') }}" class="btn btn-warning">Batal</a>
+                            <a href="" class="btn btn-warning">Batal</a>
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </div>
                     </form>

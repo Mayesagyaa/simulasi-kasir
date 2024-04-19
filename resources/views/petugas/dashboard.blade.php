@@ -1,4 +1,4 @@
-@extends('layouts.index')
+@extends('petugas.index')
 
 @section('content.index')
     <!-- Content Header (Page header) -->

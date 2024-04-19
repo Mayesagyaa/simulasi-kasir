@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\produk;
+use App\Models\Produk;
 use Illuminate\Http\Request;
 use Illuminate\Queue\Jobs\RedisJob;
 
@@ -24,7 +24,6 @@ class ProdukController extends Controller
         $request->validate([
             'nama_produk' => 'required',
             'harga' => 'required',
-            'stok' => 'required',
             'gambar' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
@@ -35,6 +34,7 @@ class ProdukController extends Controller
             $gambar->move(public_path('upload/'), $profileImage);
             $input['gambar'] = 'upload/' . $profileImage;
         }
+        $input['stok'] = 0;
 
         Produk::create($input);
         return redirect()->route('produk');
@@ -43,7 +43,7 @@ class ProdukController extends Controller
     public function edit($id)
     {
         $produk = Produk::find($id)->first();
-        return view('admin.produk.form', ['produk' => $produk]);
+        return view('admin.produk.edit-stok', ['produk' => $produk]);
     }
 
     public function update(Request $request, $id)
@@ -81,4 +81,38 @@ class ProdukController extends Controller
         Produk::find($id)->delete();
         return redirect()->route('produk');
     }
+
+    public function updateStok(Request $request, $id)
+{
+    // Validasi input stok
+    $request->validate([
+        'stok' => 'required|numeric',
+    ]);
+
+    // Temukan produk berdasarkan ID
+    $produk = Produk::findOrFail($id);
+
+    // Update stok produk dengan nilai baru dari request
+    $message = $produk->update([
+        'stok' => $request->stok,
+    ]);
+
+    // Redirect kembali dengan pesan 
+    if($message){
+        return response(['message' => 'Update stock successfully']);
+    }
+
 }
+
+public function indexPetugas()
+{
+    $produk = Produk::all(); // Mengambil semua data produk
+    return view('petugas.produk.produkPetugas', compact('produk')); // Mengirim data produk ke view
+}
+
+    
+
+}
+
+    
+

@@ -11,7 +11,7 @@
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="{{ route('dashboard_admin') }}">Beranda</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Beranda</a></li>
                         <li class="breadcrumb-item"><a href="{{ route('produk') }}">Produk</a></li>
                         <li class="breadcruamb-item active">Form Produk</li>
                     </ol>
@@ -23,7 +23,7 @@
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <div class="card card-primary">
-                    <form action="{{ isset($produk) ? route('produk.edit.update', $produk->id) : route('produk.tambah.simpan') }}"
+                    <form action="{{ isset($produk) ? route('produk.edit.update', $produk->id) : route('formproduk') }}"
                         method="POST" enctype="multipart/form-data">
                         @csrf
                         @if (isset($produk))

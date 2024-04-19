@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>SIM Restaurant @yield('title')</title>
+    <title>AkuKasir @yield('title')</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
@@ -42,12 +42,6 @@
                 <li class="nav-item">
                     <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i
                             class="fas fa-bars"></i></a>
-                </li>
-                <li class="nav-item d-none d-sm-inline-block">
-                    <a href="{{ route('dashboard') }}" class="nav-link">Beranda</a>
-                </li>
-                <li class="nav-item d-none d-sm-inline-block">
-                    <a href="#" class="nav-link">Kontak</a>
                 </li>
             </ul>
 
@@ -100,9 +94,6 @@
         <div class="content-wrapper">
             @yield('content.index')
         </div>
-        <!-- /.content-wrapper -->
-        @include('layouts.footer')
-
         <!-- Control Sidebar -->
         <aside class="control-sidebar control-sidebar-dark">
             <!-- Control sidebar content goes here -->
